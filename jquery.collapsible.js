@@ -59,37 +59,13 @@
 			var $this = $(this);
 			saveOpts($this, opts);
 			
-			//bind it to the event
-			if (opts.bind == 'mouseenter') {
-				$this.bind('mouseenter', function(e) {
+			if (opts.bind == 'mouseenter' || opts.bind == 'mouseover' ||
+			    opts.bind == 'click' || opts.bind == 'dblclick') {
+				$this.bind(opts.bind, function(e) {
 					e.preventDefault(); 
 					toggle($this, opts);
 				});
-			}
-			
-			//bind it to the event
-			if (opts.bind == 'mouseover') {
-				$this.bind('mouseover',function(e) {
-					e.preventDefault(); 
-					toggle($this, opts); 
-				});
-			}
-			
-			//bind it to the event
-			if (opts.bind == 'click') {
-				$this.bind('click', function(e) {
-					e.preventDefault();
-					toggle($this, opts);
-				});
-			}
-			
-			//bind it to the event
-			if (opts.bind == 'dblclick') {
-				$this.bind('dblclick', function(e) {
-					e.preventDefault();
-					toggle($this, opts);
-				});
-			}
+		    }
 			
 			//initialize the collapsibles
 			//get the id for this element

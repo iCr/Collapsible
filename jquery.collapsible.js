@@ -84,20 +84,14 @@
 			//get the id for this element
 			id = $this.attr('id');
 			
-			//if not using cookies, open defauls
-			if (!useCookies(opts)) {
-				//is this collapsible in the default open array?
+			if (useCookies(opts) && issetCookie(opts)) {
+			    //has a cookie been set, this overrides default open
+                cookieIndex = inCookie(id, opts);
+				toggleOpenClose($this, cookieIndex, opened, opts);
+			} else {
+                //is this collapsible in the default open array?
 				dOpenIndex = inDefaultOpen(id, opts);
 				toggleOpenClose($this, dOpenIndex, opened, opts);
-			} else { //can use cookies, use them now
-				//has a cookie been set, this overrides default open
-				if (issetCookie(opts)) {
-					cookieIndex = inCookie(id, opts);
-    				toggleOpenClose($this, cookieIndex, opened, opts);
-				} else { //a cookie hasn't been set open defaults, add them to opened array
-					dOpenIndex = inDefaultOpen(id, opts);
-    				toggleOpenClose($this, dOpenIndex, opened, opts);
-				}
 			}
 		});
 		

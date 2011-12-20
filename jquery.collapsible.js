@@ -46,6 +46,19 @@
 		}
 	};
 
+    function toggleOpenClose($this, isOpen, opened, opts) {
+        var id = $this.attr('id');
+		//close it if not defaulted to open
+		if (isOpen === false) {
+			$this.addClass(opts.cssClose);
+			$this.next().hide(); 
+		} else { //its a default open, open it
+			$this.addClass(opts.cssOpen);
+			$this.next().show();
+			opened.push(id);
+		}
+    };
+
 	//create the initial collapsible
 	function createCollapsible(obj, options) {
 		//build main options before element iteration
@@ -75,38 +88,15 @@
 			if (!useCookies(opts)) {
 				//is this collapsible in the default open array?
 				dOpenIndex = inDefaultOpen(id, opts);
-				
-				//close it if not defaulted to open
-				if (dOpenIndex === false) {
-					$this.addClass(opts.cssClose);
-					$this.next().hide(); 
-				} else { //its a default open, open it
-					$this.addClass(opts.cssOpen);
-					$this.next().show();
-					opened.push(id);
-				}
+				toggleOpenClose($this, dOpenIndex, opened, opts);
 			} else { //can use cookies, use them now
 				//has a cookie been set, this overrides default open
 				if (issetCookie(opts)) {
 					cookieIndex = inCookie(id, opts);
-					if (cookieIndex === false) { 
-						$this.addClass(opts.cssClose);
-						$this.next().hide();
-					} else {
-						$this.addClass(opts.cssOpen);
-						$this.next().show();
-						opened.push(id);
-					}
+    				toggleOpenClose($this, cookieIndex, opened, opts);
 				} else { //a cookie hasn't been set open defaults, add them to opened array
 					dOpenIndex = inDefaultOpen(id, opts);
-					if (dOpenIndex === false) {
-						$this.addClass(opts.cssClose);
-						$this.next().hide();
-					} else {
-						$this.addClass(opts.cssOpen);
-						$this.next().show();
-						opened.push(id);
-					}
+    				toggleOpenClose($this, dOpenIndex, opened, opts);
 				}
 			}
 		});

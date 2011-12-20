@@ -47,7 +47,6 @@
 	};
 
     function toggleOpenClose($this, isOpen, opened, opts) {
-        var id = $this.attr('id');
 		//close it if not defaulted to open
 		if (isOpen === false) {
 			$this.addClass(opts.cssClose);
@@ -55,7 +54,7 @@
 		} else { //its a default open, open it
 			$this.addClass(opts.cssOpen);
 			$this.next().show();
-			opened.push(id);
+			opened.push($this.attr('id'));
 		}
     };
 
@@ -82,8 +81,7 @@
 			
 			//initialize the collapsibles
 			//get the id for this element
-			id = $this.attr('id');
-			
+			var id = $this.attr('id');
 			if (useCookies(opts) && issetCookie(opts)) {
 			    //has a cookie been set, this overrides default open
                 cookieIndex = inCookie(id, opts);
@@ -131,8 +129,7 @@
 		//do cookies if plugin available
 		if (useCookies(opts)) {
 			// split the cookieOpen string by ","
-			id = $this.attr('id');
-			unsetCookieId(id, opts);
+			unsetCookieId($this.attr('id'), opts);
 		}
 	}
 	
@@ -147,8 +144,7 @@
 		//do cookies if plugin available
 		if (useCookies(opts)) {
 			// split the cookieOpen string by ","
-			id = $this.attr('id');
-			appendCookie(id, opts);
+			appendCookie($this.attr('id'), opts);
 		}
 	}
 	
@@ -196,7 +192,7 @@
 		}
 		
 		//get the cookie
-		cookie = $.cookie(opts.cookieName);
+		var cookie = $.cookie(opts.cookieName);
 		
 		//unescape it
 		cookie = unescape(cookie);
@@ -233,13 +229,13 @@
 		}
 		
 		//still here get the cookie
-		cookie = $.cookie(opts.cookieName);
+		var cookie = $.cookie(opts.cookieName);
 		
 		//unescape it
 		cookie = unescape(cookie);
 		
 		//turn it into an array
-		cookieArray = cookie.split(',');
+		var cookieArray = cookie.split(',');
 		
 		//lets pop it out of the array
 		cookieArray.splice(cookieIndex, 1);
@@ -273,13 +269,13 @@
 		}
 		
 		//unescape it
-		cookie = unescape($.cookie(opts.cookieName));
+		var cookie = unescape($.cookie(opts.cookieName));
 		
 		//turn it into an array
-		cookieArray = cookie.split(',');
+		var cookieArray = cookie.split(',');
 		
 		//get the index of the collapsible if in the cookie array
-		cookieIndex = $.inArray(value, cookieArray);
+		var cookieIndex = $.inArray(value, cookieArray);
 		
 		//is this value in the cookie arrray
 		if (cookieIndex == -1) { //no, quit here
@@ -309,10 +305,10 @@
 	function inDefaultOpen(id, opts)
 	{
 		//get the array of open collapsibles
-		defaultOpen = getDefaultOpen(opts);
+		var defaultOpen = getDefaultOpen(opts);
 		
 		//is it in the default open array
-		index = $.inArray(id, defaultOpen);
+		var index = $.inArray(id, defaultOpen);
 		if (index == -1) { //nope, quit here
 			return false;
 		}
@@ -324,7 +320,7 @@
 	function getDefaultOpen(opts)
 	{
 		//initialize an empty array
-		defaultOpen = new Array();
+		var defaultOpen = new Array();
 		
 		//if there is a list, lets split it into an array
 		if (opts.defaultOpen != '') {

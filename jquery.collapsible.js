@@ -172,6 +172,14 @@
 		return true;
 	}
 	
+	function arrayFromCookie(cookieName) {
+        //get the cookie + unescape it
+		var cookie = unescape($.cookie(cookieName));
+		
+		//turn it into an array
+		return cookie.split(',');	
+	}
+	
 	//append a collapsible to the cookie
 	function appendCookie(value, opts) {
 		//check if cookie plugin available and cookiename is set
@@ -191,14 +199,7 @@
 			return true;
 		}
 		
-		//get the cookie
-		var cookie = $.cookie(opts.cookieName);
-		
-		//unescape it
-		cookie = unescape(cookie);
-		
-		//turn it into an array
-		cookieArray = cookie.split(',');
+		var cookieArray = arrayFromCookie(opts.cookieName);
 		
 		//add it to list
 		cookieArray.push(value);
@@ -229,13 +230,7 @@
 		}
 		
 		//still here get the cookie
-		var cookie = $.cookie(opts.cookieName);
-		
-		//unescape it
-		cookie = unescape(cookie);
-		
-		//turn it into an array
-		var cookieArray = cookie.split(',');
+		var cookieArray = arrayFromCookie(opts.cookieName);
 		
 		//lets pop it out of the array
 		cookieArray.splice(cookieIndex, 1);
@@ -268,12 +263,8 @@
 			return false;
 		}
 		
-		//unescape it
-		var cookie = unescape($.cookie(opts.cookieName));
-		
-		//turn it into an array
-		var cookieArray = cookie.split(',');
-		
+		var cookieArray = arrayFromCookie(opts.cookieName);
+				
 		//get the index of the collapsible if in the cookie array
 		var cookieIndex = $.inArray(value, cookieArray);
 		

@@ -50,10 +50,10 @@
 		//close it if not defaulted to open
 		if (isOpen === false) {
 			$this.addClass(opts.cssClose);
-			$this.next().hide(); 
+			opts.collapsibleElement($this).hide();
 		} else { //its a default open, open it
 			$this.addClass(opts.cssOpen);
-			$this.next().show();
+			opts.collapsibleElement($this).show();
 			opened.push($this.attr('id'));
 		}
     };
@@ -335,11 +335,16 @@
 		defaultOpen: '', //comma seperated list of header ids that you want opened by default
 		speed: 'slow', //speed of the slide effect
 		bind: 'click', //event to bind to, supports click, dblclick, mouseover and mouseenter
+		collapsibleElement: function($this) {
+		    return $this.next();
+		},
 		animateOpen: function (elem, opts) { //replace the standard slideUp with custom function
-			elem.next().slideUp(opts.speed);
+		    var $collapsible = opts.collapsibleElement(elem);
+			$collapsible.slideUp(opts.speed);
 		},
 		animateClose: function (elem, opts) { //replace the standard slideDown with custom function
-			elem.next().slideDown(opts.speed);
+		    var $collapsible = opts.collapsibleElement(elem);
+			$collapsible.slideDown(opts.speed);
 		}
 	};
 })(jQuery);

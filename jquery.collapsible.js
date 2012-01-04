@@ -204,7 +204,7 @@
 		}
 		
 		//cookie already exists, is this collapsible already set?
-		if (inCookie(value, opts)) { //yes, quit here
+		if (inCookie(value, opts) !== false) { //yes, quit here
 			return true;
 		}
 		

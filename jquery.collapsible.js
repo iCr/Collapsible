@@ -46,6 +46,15 @@
 		}
 	};
 
+    function idForCollapsibleItem($element) {
+        if ($element.parent().length === 0) {
+            return null;
+        } else if ($element.attr('id') !== undefined && $element.attr('id') !== '') {
+            return $element.attr('id');
+        }
+        return idForCollapsibleItem($element.parent());
+    }
+
     function toggleOpenClose($this, isOpen, opened, opts) {
 		//close it if not defaulted to open
 		if (isOpen === false) {
@@ -54,7 +63,7 @@
 		} else { //its a default open, open it
 			$this.addClass(opts.cssOpen);
 			opts.collapsibleElement($this).show();
-			opened.push($this.attr('id'));
+			opened.push(idForCollapsibleItem($this));
 		}
     };
 
@@ -81,7 +90,7 @@
 			
 			//initialize the collapsibles
 			//get the id for this element
-			var id = $this.attr('id');
+			var id = idForCollapsibleItem($this);
 			if (useCookies(opts) && issetCookie(opts)) {
 			    //has a cookie been set, this overrides default open
                 cookieIndex = inCookie(id, opts);
@@ -129,7 +138,7 @@
 		//do cookies if plugin available
 		if (useCookies(opts)) {
 			// split the cookieOpen string by ","
-			unsetCookieId($this.attr('id'), opts);
+			unsetCookieId(idForCollapsibleItem($this), opts);
 		}
 	}
 	
@@ -144,7 +153,7 @@
 		//do cookies if plugin available
 		if (useCookies(opts)) {
 			// split the cookieOpen string by ","
-			appendCookie($this.attr('id'), opts);
+			appendCookie(idForCollapsibleItem($this), opts);
 		}
 	}
 	
